@@ -83,6 +83,7 @@ También aprendimos a crear llaves (ssh-keygen) y alias para acceder a los servi
 - Fecha: martes 27 de Febrero 2024
 - Presentación:
 - Lecturas y cursos recomendados:
+- Datos: `/mnt/Guanina/bioinfo24/data/`
 
 ### Dia 2. Diversos pipeline para Alineamiento, ensamblaje y conteo de reads
 
