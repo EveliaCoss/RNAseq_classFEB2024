@@ -26,6 +26,31 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
 - Dia 3. Importar datos en R, Normalización y Corrección por batch / DEG con DESeq2
 - Dia 4. GSEA - Análisis funcional
 
+### Dia 1. Aspectos generales de RNA-Seq / Control de calidad de los datos
+
+- Fecha: martes 27 de Febrero 2024
+- Presentación:
+- Lecturas y cursos recomendados:
+- Datos: `/mnt/Guanina/bioinfo24/data/`
+
+### Dia 2. Diversos pipeline para Alineamiento, ensamblaje y conteo de reads
+
+- Fecha: miércoles 28 de Febrero 2024
+- Presentación:
+- Lecturas y cursos recomendados:
+
+### Dia 3. Importar datos en R, Normalización y Corrección por batch / DEG con DESeq2
+
+- Fecha: jueves 29 de Febrero 2024
+- Presentación:
+- Lecturas y cursos recomendados:
+
+### Dia 4. GSEA - Análisis funcional
+
+- Fecha: viernes 1 de marzo 2024
+- Presentación:
+- Lecturas y cursos recomendados:
+
 ## Requisitos
 
 - Contar con una terminal en tu sistema operativo
@@ -77,31 +102,6 @@ En la clase previa les enseñe a crear reportes en Rmarkdown, si necesitan revis
 - Crear llaves y alias
  
 También aprendimos a crear llaves (ssh-keygen) y alias para acceder a los servidores de una manera segura y rápida: https://github.com/EveliaCoss/keygen
-
-### Dia 1. Aspectos generales de RNA-Seq / Control de calidad de los datos
-
-- Fecha: martes 27 de Febrero 2024
-- Presentación:
-- Lecturas y cursos recomendados:
-- Datos: `/mnt/Guanina/bioinfo24/data/`
-
-### Dia 2. Diversos pipeline para Alineamiento, ensamblaje y conteo de reads
-
-- Fecha: miércoles 28 de Febrero 2024
-- Presentación:
-- Lecturas y cursos recomendados:
-
-### Dia 3. Importar datos en R, Normalización y Corrección por batch / DEG con DESeq2
-
-- Fecha: jueves 29 de Febrero 2024
-- Presentación:
-- Lecturas y cursos recomendados:
-
-### Dia 4. GSEA - Análisis funcional
-
-- Fecha: viernes 1 de marzo 2024
-- Presentación:
-- Lecturas y cursos recomendados:
 
 ## Cursos para practicar 
 
