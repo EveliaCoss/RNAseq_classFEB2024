@@ -1,0 +1,30 @@
+#!/bin/bash
+# Use current working directory
+#$ -cwd
+#
+# Join stdout and stderr
+#$ -j y
+#
+# Run job through bash shell
+#$ -S /bin/bash
+#
+#You can edit the script since this line
+#
+# Your job name
+#$ -N qc2
+#
+# Send an email after the job has finished
+#$ -m e
+#$ -M correo@gmail.com
+#
+#
+# If modules are needed, source modules environment (Do not delete the next line):
+. /etc/profile.d/modules.sh
+#
+# Add any modules you might require:
+#
+module load fastqc/0.11.3
+module load multiqc/1.5
+#
+# Write your commands in the next line
+./qc2.sh
