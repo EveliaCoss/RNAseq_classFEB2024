@@ -1,0 +1,28 @@
+#!/bin/bash
+# Use current working directory
+#$ -cwd
+#
+# Join stdout and stderr
+#$ -j y
+#
+# Run job through bash shell
+#$ -S /bin/bash
+#
+#You can edit the scriptsince this line
+#
+# Your job name
+#$ -N LPS_30
+#
+# Send an email after the job has finished
+#$ -m e
+#$ -M diego.rames@me.com
+#
+# If modules are needed, source modules environment (Do not delete the next line):
+. /etc/profile.d/modules.sh
+#
+# Add any modules you might require:
+
+#
+# Write your commands in the next line
+wget -P /mnt/Citosina/amedina/dramirez/clase/data/PLS_30min ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR123/099/SRR12363099/SRR12363099_1.fastq.gz;
+wget -P /mnt/Citosina/amedina/dramirez/clase/data/PLS_30min ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR123/099/SRR12363099/SRR12363099_2.fastq.gz
