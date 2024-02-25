@@ -32,14 +32,16 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
 - Presentación:
     - [Aspectos generales de RNA-Seq](https://eveliacoss.github.io/RNAseq_classFEB2024/Presentaciones/Dia1_AspectosGenerales.html#1)
     - [Control de calidad de los datos](https://eveliacoss.github.io/RNAseq_classFEB2024/Presentaciones/Dia1_AspectosGenerales.html#43)
-    - [Mis primeros pasos en Bash](https://eveliacoss.github.io/RNAseq_classFEB2024/Presentaciones/Dia1_AspectosGenerales.html#62)
+    - [Mis primeros pasos en Bash](https://eveliacoss.github.io/RNAseq_classFEB2024/Presentaciones/Dia1_AspectosGenerales.html#65)
 - Datos: `/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/`
+- Tarea: Elegir en equipos los transcriptomas que emplearán en su proyecto - [Información diapositiva 58 y moodle ENES](https://eveliacoss.github.io/RNAseq_classFEB2024/Presentaciones/Dia1_AspectosGenerales.html#62)
 - Lecturas y cursos recomendados:
 
 ### Dia 2. Diversos pipeline para Alineamiento, ensamblaje y conteo de reads
 
 - Fecha: miércoles 28 de Febrero 2024
 - Presentación:
+    - [Diversos pipeline para Alineamiento, ensamblaje y conteo de reads](https://eveliacoss.github.io/RNAseq_classFEB2024/Presentaciones/Dia2_QCAlineamiento.html#1)
 - Lecturas y cursos recomendados:
 
 ### Dia 3. Importar datos en R, Normalización y Corrección por batch / DEG con DESeq2
