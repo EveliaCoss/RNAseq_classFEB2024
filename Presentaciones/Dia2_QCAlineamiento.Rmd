@@ -2,7 +2,7 @@
 title: "Workshop: Análisis de datos de RNA-Seq"
 subtitle: "⚔<br/>Alineamiento y conteo de RNA-seq"  
 author: "Dra. Evelia Coss, Sofia Salazar y Diego Ramirez"
-date: "11/7/2023"
+date: "28/02/2024"
 output:
   xaringan::moon_reader:
     css: 
@@ -151,7 +151,7 @@ Asistente de investigación @ [Im Lab](https://hakyimlab.org/), The University o
 ]
 
 .center-col[
-### `r fontawesome::fa("star", fill = "#181818")` Diego Ramirez
+### `r fontawesome::fa("dna", fill = "#181818")` Diego Ramirez
 
 Estudiante de la [Licenciatura en Ciencias Genómicas](https://www.enesjuriquilla.unam.mx/?page_id=2136) @ ENES-J UNAM
 
@@ -187,7 +187,7 @@ Imagen proveniente de [mRNA-Seq data analysis workflow](https://biocorecrg.githu
 
 class: inverse, center, middle
 
-`r fontawesome::fa("laptop-file", height = "3em")`
+`r fontawesome::fa("file-lines", height = "3em")`
 # Contenido de la clase
 
 ---
@@ -198,13 +198,13 @@ class: inverse, center, middle
 
 ### 3. Trimming
 
-### 4. Alineamiento con STAR
+### 4. Alineamiento con el genoma de referencia mediante STAR
 
 ---
 
 class: inverse, center, middle
 
-`r fontawesome::fa("laptop-file", height = "3em")`
+`r fontawesome::fa("folder-open", height = "3em")`
 # 1. Descarga de datos públicos de RNA-seq
 
 ---
@@ -212,7 +212,7 @@ class: inverse, center, middle
 
 La forma más simple es ir a repositorios de datos públicos, como [GEO (Gene Expression Omnibus)](https://www.ncbi.nlm.nih.gov/geo/), en donde encontraremos los archivos de datos **crudos** y a veces también las **matrices de cuentas ya procesadas** ó a [Recount3](https://rna.recount.bio/) (aquí podemos encontrar datos ya procesados).
 
-**Para esta clase, usaremos las muestras del estudio [GSE155516](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM4705616)**
+**Para esta clase, usaremos las muestras del estudio [GSE155516](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE155516)** provenientes de [Kodali, *et al*. 2021. *Mol Psychiatry*](https://www.nature.com/articles/s41380-020-00955-5).
 
 ### Descarga de los datos con `wget`
 
@@ -223,13 +223,13 @@ Seleccionamos el estudio donde dice **Nucleotide sequences**, y en la tabla infe
 ---
 ### Descarga de los datos con `wget`
 
-Esto descargará un script the bash `.sh` que podremos utilizar para descargar las muestras.
+Esto descargará un script BASH `.sh` como [este](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/scripts/download.sh), el cual utilizar para descargar las muestras.
 
-Para correr este script y descargar las muestras, debemos ir a la carpeta donde las queremos guardar y ahí guardamos el script. Supongamos que yo renombré mi script a `download.sh`. Y lo tengo en una carpeta llamada `data`.
+Para correr este script y descargar las muestras, debemos ir a la carpeta donde las queremos guardar y ahí guardamos el script. Supongamos que yo renombré mi script a [`download.sh`](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/scripts/download.sh). Y lo tengo en una carpeta llamada `scripts`.
 
 
 ```{bash, eval = F}
-cd /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/
+cd /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/scripts/
 chmod +x downloads.sh
 ./downloads.sh
 ```
@@ -237,10 +237,33 @@ chmod +x downloads.sh
 Para correr el script, primero me doy permisos de ejecución con `chmod +x` y después ejecuto el script con `./`
 
 ---
+### Descarga de los datos con `wget`
+
+Ya que las descargas duran mucho es conveniente mandar el script a la cola de ejecución usando un Sun Grid Engine (SGE) `.sge`. Así el script seguirá ejecutándose aunque tu no estes. 
+
+Para lo cual hay 2 formas:
+A)	Tener un solo script donde todos los datos se descargue. 
+  - Ejemplo: [download_all_rawData.sge](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/scripts/download_all_rawData.sge)
+B)	Tener varios script y agilizar la descarga múltiple. 
+  - Ejemplos: [download_control_rawData.sge](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/scripts/download_control_rawData.sge),  [download_15min_rawData.sge](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/scripts/download_15min_rawData.sge), [download_30min_rawData.sge](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/scripts/download_30min_rawData.sge) y [download_4h_rawData.sge](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/scripts/download_4h_rawData.sge).
+
+---
+
+## Symlink
+
+Los datos contenido en `data/` se encuentran presentes dentro de la carpeta con ayuda de un symlink:
+
+```{bash, eval=FALSE}
+ln -s /mnt/Citosina/amedina/dramirez/clase/data/fastq/* .
+```
+
+Es una manera de trabajar con los datos sin tener que hacer copias de los mismos. No pesan, pero funcionan como los datos originales.
+
+---
 
 class: inverse, center, middle
 
-`r fontawesome::fa("laptop-file", height = "3em")`
+`r fontawesome::fa("laptop-code", height = "3em")`
 # 2. Análisis de control de calidad
 
 ---
@@ -271,7 +294,7 @@ También creamos una carpeta para los outputs de `fastqc`
 ```{bash, eval = F}
 module load fastqc/0.11.3
 module load multiqc/1.5
-cd /mnt/Citosina/amedina/ssalazar/claseSTAR/
+cd /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/
 mkdir quality1
 ```
 
@@ -288,17 +311,23 @@ fastqc nombre.fastq.gz -o /directorio/de/salida
 ```
 
 ---
-### Pausa: Mi carpeta se ve (más o menos) así:
+
+## Analicemos el output de `fastQC`
+
+Veamos la informacion contenida en el [`SRR12363092_1_fastqc.html`](https://eveliacoss.github.io/RNAseq_classFEB2024/Practica_Dia2/FastQC_Reports/SRR12363092_1_fastqc.html).
+
+---
+## Pausa: Mi carpeta se ve (más o menos) así:
+
 ```{bash, eval = F}
-claseSTAR
-├── data
-│   ├── downloads.sh
+Clase_RNASeq2024/
+├── data/
 │   ├── SRR12363092_1.fastq.gz
 │   ├── SRR12363092_2.fastq.gz
 │   ├── SRR12363093_1.fastq.gz
 │   ├── SRR12363093_2.fastq.gz
 ...
-├── quality1
+├── quality1/
 │   ├── SRR12363092_1_fastqc.html
 │   ├── SRR12363092_1_fastqc.zip
 │   ├── SRR12363092_2_fastqc.html
@@ -319,22 +348,33 @@ multiqc quality1
 #### **NOTA: siempre es mejor utilizar direcciones absolutas a relativas, para evitar que tus outputs se guarden en un directorio no deseado: **
 
 ```{bash, eval = F}
-multiqc /mnt/Citosina/amedina/ssalazar/claseSTAR/quality1
+multiqc /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/quality1/
 ```
 
 ---
-### Analicemos el output de `multiqc`
 
-```
-multiqc_report.html
-```
+## Script y ejecución en el cluster
+
+Si desean ver como se analizaron los datos empleando los programas `FastQC` y `multiQC` dentro del cluster DNA, les dejo los siguientes scripts:
+
+  - [`qc1.sh`](https://github.com/EveliaCoss/RNAseq_classFEB2024/edit/main/Practica_Dia2/scripts/qc1.sh) 
+  - [`qc1.sge`](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/scripts/qc1.sge)
+
+Mira [aquí](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/out_logs/qc1.o369176) la salida del programa.
+
+---
+
+## Analicemos el output de `multiqc`
+
+Veamos la informacion contenida en el [`multiqc_report.html`](https://eveliacoss.github.io/RNAseq_classFEB2024/Practica_Dia2/FastQC_Reports/multiqc_report.html).
 
 ---
 
 class: inverse, center, middle
 
-`r fontawesome::fa("laptop-file", height = "3em")`
+`r fontawesome::fa("filter", height = "3em")`
 # 3. Trimming
+### Remover adaptadores y secuencias de mala calidad 
 
 ---
 
@@ -343,7 +383,7 @@ class: inverse, center, middle
 Para hacer **trimming** de las lecturas que no tuvieron una buena calidad, utilizaremos la herramienta `trimmomatic`. Este programa tiene muchas opciones que nos permiten hacer trimming de formas distintas, aquí muestro el comando que utilizaremos para nuestras necesidades. Pero asegúrate de leer el [manual](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf) para tus análisis personales.
 
 
-**Para paired end necesitamos:**
+**Para paired-end necesitamos:**
 
 - Las dos lecturas paired end por muestra: `SRRxxxxx_1.fastq.gz` y `SRRxxxx_2.fastq.gz`
 
@@ -356,7 +396,8 @@ wget https://raw.githubusercontent.com/timflutre/trimmomatic/master/adapters/Tru
 ```
 
 
-Trimmomatic nos dará 4 outputs: Las secuencias que quedaron sin par que eran originalmente del archivo "1": `_1_unpaired.fastq.gz`, las secuencias sin par que eran del archivo "2": `_2_unpaired.fastq.gz` y las secuencias que aun están pareadas: `_1_trimmed.fastq.gz` y `_2_trimmed.fastq.gz`
+Trimmomatic nos dará 4 outputs: Las secuencias que quedaron sin par que eran originalmente del archivo "1": `_1_unpaired.fastq.gz`, las secuencias sin par que eran del archivo "2": `_2_unpaired.fastq.gz` y las secuencias que aun están pareadas: `_1_trimmed.fastq.gz` y `_2_trimmed.fastq.gz`.
+
 ---
 
 ## Correr Trimmomatic
@@ -364,22 +405,22 @@ Trimmomatic nos dará 4 outputs: Las secuencias que quedaron sin par que eran or
 Creamos una carpeta para los resultados
 
 ```{bash, eval = F}
-mkdir /mnt/Citosina/amedina/ssalazar/claseSTAR/TRIM_results
+mkdir TRIM_results
 ```
 
 Usamos un `for loop` para hacer trimmomatic a cada par de lecturas `SRRxxxxx_1.fastq.gz` y `SRRxxxx_2.fastq.gz`
 
 ```{bash, eval = F}
 module load trimmomatic/0.33
-cd /mnt/Citosina/amedina/ssalazar/claseSTAR/data
+cd /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/data
 for i in *_1.fastq.gz;
 do echo
 trimmomatic PE -threads 8 -phred33 $i "${i%_1.fastq.gz}_2.fastq.gz" \
-/mnt/Citosina/amedina/ssalazar/claseSTAR/TRIM_results/"${i%_1.fastq.gz}_1_trimmed.fq.gz" \
-/mnt/Citosina/amedina/ssalazar/claseSTAR/TRIM_results/"${i%_1.fastq.gz}_1_unpaired.fq.gz" \
-/mnt/Citosina/amedina/ssalazar/claseSTAR/TRIM_results/"${i%_1.fastq.gz}_2_trimmed.fq.gz" \
-/mnt/Citosina/amedina/ssalazar/claseSTAR/TRIM_results/"${i%_1.fastq.gz}_2_unpaired.fq.gz" \
-ILLUMINACLIP:/mnt/Citosina/amedina/ssalazar/claseSTAR/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:20 MINLEN:80 \
+/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/TRIM_results/"${i%_1.fastq.gz}_1_trimmed.fq.gz" \
+/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/TRIM_results/"${i%_1.fastq.gz}_1_unpaired.fq.gz" \
+/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/TRIM_results/"${i%_1.fastq.gz}_2_trimmed.fq.gz" \
+/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/TRIM_results/"${i%_1.fastq.gz}_2_unpaired.fq.gz" \
+ILLUMINACLIP:/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:20 MINLEN:80 \
 
 done
 ```
@@ -404,7 +445,7 @@ done
 - requiredQuality: specifies the average quality required.
 
 ```{bash, eval= F}
-ILLUMINACLIP:/mnt/Citosina/amedina/ssalazar/claseSTAR/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:20 MINLEN:80
+ILLUMINACLIP:/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:20 MINLEN:80
 ```
 
 ---
@@ -424,34 +465,44 @@ Remove low quality bases from the end.
 quality: Specifies the minimum quality required to keep a base
 
 ```{bash, eval= F}
-ILLUMINACLIP:/mnt/Citosina/amedina/ssalazar/claseSTAR/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:20 MINLEN:80
+ILLUMINACLIP:/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:20 MINLEN:80
 ```
 
-Mira [aquí](https://github.com/EveliaCoss/RNASeq_Workshop_Nov2023/blob/main/Dia2_Alineamiento/out_logs/trim.o369193) cómo se ve la ejecución de este comando.
+Mira [aquí](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/out_logs/trim.o369193) cómo se ve la ejecución de este comando.
 
 ---
 
 ## QC del Trimming
 
-### ¿Qué tan bueno fue nuestro control de calidad?
+### ¿Qué tan buena se encuentra la calidad posterior a la limpieza de adaptadores y secuencias de baja calidad?
 
 Corramos `fastqc` y `multiqc` de nuevo
 
 ```{bash, eval = F}
-mkdir /mnt/Citosina/amedina/ssalazar/claseSTAR/quality2
-for file in /mnt/Citosina/amedina/ssalazar/claseSTAR/TRIM_results/*.fq.gz; do fastqc $file -o /mnt/Citosina/amedina/ssalazar/claseSTAR/quality2; done
+mkdir quality2
+for file in /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/TRIM_results/*.fq.gz; do fastqc $file -o /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/quality2; done
 ```
 
 ```{bash, eval = F}
-multiqc /mnt/Citosina/amedina/ssalazar/claseSTAR/quality2
+multiqc /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/quality2
 ```
 
 ---
+
+## Script y ejecución en el cluster
+
+Si desean ver como se analizaron los datos empleando los programas `FastQC` y `multiQC` dentro del cluster DNA, les dejo los siguientes scripts:
+
+  - [`qc2.sh`](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/scripts/qc2.sh) 
+  - [`qc2.sge`](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/scripts/qc1.sge)
+
+---
+
 ### Pausa: Mi carpeta se ve (más o menos) así:
+
 ```{bash, eval = F}
 claseSTAR
 ├── data
-│   ├── downloads.sh
 │   ├── SRR12363092_1.fastq.gz
 ...
 ├── quality1
@@ -473,22 +524,25 @@ claseSTAR
 ```
 ---
 
-### Analicemos el output de `multiqc`
+### Analicemos el output del `FastQC` y `multiqc`
 
-```
-multiqc_report.html
-```
+Veamos la información contenida en los reportes:
+
+- `FastQC` - [SRR12363092_1_trimmed.fq_fastqc.html](https://eveliacoss.github.io/RNAseq_classFEB2024/Practica_Dia2/FastQC_Reports/SRR12363092_1_trimmed.fq_fastqc.html)
+
+- `multiqc` - [`multiqc_report2.html`](https://eveliacoss.github.io/RNAseq_classFEB2024/Practica_Dia2/FastQC_Reports/multiqc_report2.html).
+
 ---
 
 class: inverse, center, middle
 
-`r fontawesome::fa("laptop-file", height = "3em")`
-# 4. Alineamiento con STAR
+`r fontawesome::fa("bars", height = "3em")`
+# 4. Alineamiento con el genoma de referencia mediante STAR
 
 ---
 # Pero antes: ¿Qué es el alineamiento?
 
-La alineación del genoma es un proceso bioinformático que consiste alinear las secuencias de ADN o ARN de uno o más genomas. El objetivo principal de la alineación del genoma es identificar regiones de similitud u homología entre las secuencias, lo que puede proporcionar información valiosa sobre diversos procesos biológicos, como la identificación de genes, el análisis evolutivo y la anotación funcional.
+La **alineación del genoma** es un proceso bioinformático que consiste alinear las secuencias de ADN o ARN de uno o más genomas. El objetivo principal de la alineación del genoma es identificar *regiones de similitud u homología* entre las secuencias, lo que puede proporcionar información valiosa sobre diversos procesos biológicos, como la identificación de genes, el análisis evolutivo y la anotación funcional.
 
 .center[
 <img src="figures/align.png", height = "300">
@@ -508,33 +562,101 @@ La alineación del genoma es un proceso bioinformático que consiste alinear las
 
 ---
 
-#### **1. Alineación a genoma de referencia:**
+## 1. Alineamiento y ensamblaje de lecturas guiado por el **genoma de referencia**
 
-La alineación del genoma de referencia implica mapear las lecturas de RNA-Seq en un **genoma de referencia** conocido.
+.pull-left[
+```{r, echo=FALSE, out.width='60%', fig.align='center'}
+knitr::include_graphics("figures/alignment_genoma.png")
+```
+]
 
-- Nos permite identificar y cuantificar la expresión de **genes conocidos** y sus isoformas Y podemos anotar nuevos transcritos.
+.pull-right[
+El alineación del genoma de referencia implica mapear las lecturas de RNA-Seq en un **genoma de referencia** conocido.
 
-- Podemos utilizar un archivo de anotación (GFF)
+- Nos permite identificar y cuantificar la expresión de **genes conocidos** y sus isoformas. Además, podemos anotar nuevos transcritos y genes.
 
-#### **2. Alineación a transcriptoma:**
+- De preferencia contar con un archivo de anotación (GFF).
 
-Las lecturas de RNA-Seq se asignan a un transcriptoma de referencia, que es una colección de transcritos. 
+- La especie debe tener un genoma de buena calidad.
 
-- Veremos expresión de genes, pero no isoformas
-
-- No hay anotación de nuevos transcritos
-
-- Si no está en el archivo de anotación no lo veremos
-
-#### **3. Ensamblaje de novo**
-
-Ideal para una especie con genoma de mala calidad o sin referencia, como organismos no modelos, además de si no contamos con un archivo de anotación bueno
-
-Es recomendado utilizar lecturas Paired End
+- Empleado normalmente en un organismo modelo (humano, ratón, *Arabidopsis*, etc.).
+]
 
 ---
 
-# En esta clase utilizaremos el software de alineamiento **STAR**, de tipo alineamiento a genoma de referencia
+## 2. Ensamblaje de **transcriptoma guiado**
+
+.pull-left[
+```{r, echo=FALSE, out.width='60%', fig.align='center'}
+knitr::include_graphics("figures/alignment_transcriptoma.png")
+```
+]
+
+.pull-right[
+Las lecturas de RNA-Seq se asignan a un transcriptoma de referencia, que es una colección de transcritos. 
+
+- Veremos expresión de **genes**, pero no isoformas.
+
+- NO hay anotación de nuevos transcritos.
+
+- Si no está en el archivo de anotación (tz2gene/kallisto) no lo veremos.
+
+- Es necesario un archivo de anotación con buena calidad.
+]
+
+---
+
+## 2. Ensamblaje de **transcriptoma guiado**
+
+### [**Kallisto**](https://pachterlab.github.io/kallisto/manual)
+
+.pull-left[
+- Se basa en la probabilidad de asignación correcta de las lecturas a un transcrito.
+
+- **Pseudoalineamiento**.
+
+- Es rápido.
+
+- Se puede ejecutar el programa desde tu computadora.
+
+- Se basa en los grafos de Brujin Graph (T-DBG) .
+
+- Los Nodos (v1,v2,v3) son *k-mers*.
+
+- Omite pasos redundantes en el T-DBG.
+
+]
+
+.pull-right[
+```{r, echo=FALSE, out.width='80%', fig.align='center'}
+knitr::include_graphics("figures/alignment_kallisto.png")
+```
+]
+
+Si quieren intentarlo les dejo el curso que di en 2023 - [RNAseq_classFEB2023](https://github.com/EveliaCoss/RNAseq_classFEB2023/tree/main/RNA_seq).
+
+.right[.footnote[
+[Bray, *et al*. 2016. *Nature*](https://www.nature.com/articles/nbt.3519)]]
+
+---
+
+## 3. Ensamblaje ***de novo***
+
+.pull-left[
+```{r, echo=FALSE, out.width='50%', fig.align='center'}
+knitr::include_graphics("figures/alignment_denovo.png")
+```
+]
+
+.pull-right[
+Ideal para una especie con **genoma de mala calidad o sin referencia**, como **organismos NO modelos**, además de si no contamos con un archivo de anotación bueno.
+
+- Es recomendado utilizar lecturas *Paired-end*.
+]
+
+---
+
+# En esta clase utilizaremos el software de alineamiento **STAR**, de tipo alineamiento a **genoma de referencia**
 
 #### Seguiremos 2 sencillos pasos
 
@@ -544,16 +666,17 @@ Es recomendado utilizar lecturas Paired End
 
 [Manual de STAR](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf)
 
-**STAR** nos permite, además de alinear las lecturas, hacer un conteo en el mismo paso. El paso de conteo, puede ser separado y con otras herramientas, pero en esta clase, te enseñaré la forma muy sencilla en la que STAR también puede contar.
+**STAR** nos permite, además de alinear las lecturas, hacer un conteo en el mismo paso. El paso de conteo, puede ser separado y con otras herramientas, pero en esta clase, te enseñaré la forma sencilla en la que STAR también puede contar.
 
-**PARA PODER CONTAR, NECESITAMOS UN ARCHIVO DE ANOTACIÓN**
+> **NOTA: Para obtener la matriz de cuentas, NECESITAMOS UN ARCHIVO DE ANOTACIÓN.**
+
 ---
 
 ## ¿Qué es un archivo de anotación?
 
-- Un archivo de anotación GFF (General Feature File) es un formato de archivo estándar utilizado en bioinformática para almacenar y representar información genómica y de anotación para diversas características dentro de un genoma, como genes, transcritos, exones y otros elementos genómicos.
+- Un **archivo de anotación GFF** (General Feature File) es un formato de archivo estándar utilizado en bioinformática para almacenar y representar información genómica y de anotación para diversas características dentro de un *genoma*, como **genes, transcritos, exones y otros elementos genómicos**.
 
-**Utilizamos estos archivos junto al genoma de referencia para poder encontrar ubicaciones de genes, transcritos etc**
+**Utilizamos estos archivos junto al genoma de referencia para poder encontrar ubicaciones de genes, transcritos, etc.**
 
 - Los archivos GFF pueden venir en diferentes versiones, siendo GFF3 uno de los formatos más utilizados.
 
@@ -561,10 +684,13 @@ Podemos encontrar estos archivos en bases de datos genómicas como GENCODE para 
 
 ---
 
-## ¿Qué es indexar un genoma de referencia
+## ¿Qué es indexar un genoma de referencia?
 
-Es una forma computacional de crear una "estructura de datos" para el genoma de referencia, mediante **índices**, de tal forma que podramos accesar a las partes del mismo de una forma más eficiente al alinear. 
-El genoma de referencia sirve como plantilla contra la cual se realizan diversos análisis genómicos, como mapeo de lecturas, llamado de variantes y cuantificación de la expresión génica. **La indexación mejora la velocidad y la eficiencia de estos análisis** al permitir que el software **ubique y acceda rápidamente** a partes relevantes del genoma.
+Es una forma computacional de crear una "estructura de datos" para el genoma de referencia, mediante **índices**, de tal forma que podramos **accesar a las partes del mismo** de una forma más eficiente al alinear. 
+
+El genoma de referencia sirve como plantilla contra la cual se realizan diversos análisis genómicos, como mapeo de lecturas, llamado de variantes y cuantificación de la expresión génica. 
+
+**La indexación mejora la velocidad y la eficiencia de estos análisis** al permitir que el software **ubique y acceda rápidamente** a partes relevantes del genoma.
 
 ---
 
@@ -579,7 +705,7 @@ module load star/2.7.9a
 Creamos un directorio para guardar el indice
 
 ```{bash, eval = F}
-mkdir /mnt/Citosina/amedina/ssalazar/claseSTAR/STAR_index
+mkdir STAR_index
 ```
 
 El script para crear el indice es el siguiente:
@@ -587,9 +713,9 @@ El script para crear el indice es el siguiente:
 ```{bash, eval = F}
 STAR --runThreadN 12 \
 --runMode genomeGenerate \
---genomeDir /mnt/Citosina/amedina/ssalazar/claseSTAR/STAR_index \
+--genomeDir /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/STAR_index \
 --genomeFastaFiles /mnt/Archives/genome/mouse/mm10/UCSC/chromosomes-1-file/mm10.fa \
---sjdbGTFfile /mnt/Citosina/amedina/ssalazar/claseSTAR/annotation/mm10.knownGene.gtf.gz \
+--sjdbGTFfile /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/annotation/mm10.knownGene.gtf.gz \
 --sjdbOverhang 149
 ```
 
@@ -598,7 +724,15 @@ Entremos al
 
 ---
 
-Mira [aquí](https://github.com/EveliaCoss/RNASeq_Workshop_Nov2023/blob/main/Dia2_Alineamiento/out_logs/index.o369188) cómo se ve la ejecución de este comando.
+## Script y ejecución en el cluster
+
+Si desean ver como se analizaron los datos empleando el programa `STAR` para realizar el *index del genoma* dentro del cluster DNA, les dejo los siguientes scripts:
+
+  - [`STAR_index.sh`](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/scripts/STAR_index.sh) 
+  - [`index.sge`](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/scripts/index.sge)
+
+
+Mira [aquí](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/out_logs/index.o369188) cómo se ve la ejecución de este comando.
 
 ---
 
@@ -607,25 +741,45 @@ Mira [aquí](https://github.com/EveliaCoss/RNASeq_Workshop_Nov2023/blob/main/Dia
 Si revisamos el [Manual de STAR](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf) notarás que hay una opción para **Contar lecturas por genes** (Sección 8). Con la opción de `--quantMode`. De hecho, estas cuentas coinciden con las cuentas que nos daría `htseq-count`
 
 ```{bash, eval = F}
-index=/mnt/Citosina/amedina/ssalazar/claseSTAR/STAR_index
-FILES=/mnt/Citosina/amedina/ssalazar/claseSTAR/TRIM_results/*_1_trimmed.fq.gz
+index=/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/STAR_index
+FILES=/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/TRIM_results/*_1_trimmed.fq.gz
 for f in $FILES
 do
     base=$(basename $f _1_trimmed.fq.gz)
     echo $base
-    STAR --runThreadN 12 --genomeDir $index --readFilesIn $f /mnt/Citosina/amedina/ssalazar/claseSTAR/TRIM_results/$base"_2_trimmed.fq.gz" \
+    STAR --runThreadN 12 --genomeDir $index --readFilesIn $f /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/TRIM_results/$base"_2_trimmed.fq.gz" \
     --outSAMtype BAM SortedByCoordinate \
     --quantMode GeneCounts \
     --readFilesCommand zcat \
-    --outFileNamePrefix /mnt/Citosina/amedina/ssalazar/claseSTAR/STAR_output/$base
+    --outFileNamePrefix /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/STAR_output/$base
 done
 ```
 
-Mira [aquí](https://github.com/EveliaCoss/RNASeq_Workshop_Nov2023/blob/main/Dia2_Alineamiento/out_logs/align.o369662) cómo se ve la ejecución de este comando.
+Mira [aquí](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia2/out_logs/align.o369662) cómo se ve la ejecución de este comando.
 
 ---
 
-### SCRIPTS DE LA CLASE
+### SCRIPTS empleados en la clase
 
-Todos los scripts usados en esta clase están en el [GitHub](https://github.com/EveliaCoss/RNASeq_Workshop_Nov2023/tree/main/Dia2_Alineamiento/scripts)
+Todos los scripts usados en esta clase están en el [GitHub](https://github.com/EveliaCoss/RNAseq_classFEB2024/tree/main/Practica_Dia2/scripts)
 
+---
+
+class: inverse, center, middle
+
+`r fontawesome::fa("feather", height = "3em")`
+## Recordatorio: Tarea para el **Jueves 29 de Feb**
+### Elegir en equipos los transcriptomas que emplearán en su proyecto.
+
+Deben entregarme un documento con la **Descripción de los datos** por equipo al correo ecoss@liigh.unam.mx.
+
+---
+
+class: center, middle
+
+`r fontawesome::fa("code", height = "3em")`
+# Jueves 29 de febrero 2024  
+## Importar datos en R, Normalización y Corrección por batch
+## DEG con DESeq2
+
+Gracias por tu atención, respira y coméntame tus dudas. 

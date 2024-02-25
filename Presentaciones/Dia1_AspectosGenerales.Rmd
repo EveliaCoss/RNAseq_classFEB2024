@@ -978,20 +978,78 @@ Programas:
 ]
 
 .pull-right[
+
 ```{r, echo=FALSE, out.width='80%', fig.align='center'}
 knitr::include_graphics("figures/Figura17.png")
 ```
-
 ]
-
-.left[.footnote[.black[
-]]]
 
 ---
 
 class: inverse, center, middle
 
-`r fontawesome::fa("laptop-file", height = "3em")`
+`r fontawesome::fa("feather", height = "3em")`
+## Tarea para el **Jueves 29 de Feb**
+### Elegir en equipos los transcriptomas que emplearán en su proyecto.
+
+---
+
+## Actividad
+
+### 1) Elijan a su equipo.
+
+Equipos de 3 personas (3 equipos de 3 personas y un equipo de 2)
+
+### 2) Elegir el tema de acuerdo a lo siguiente:
+
+Cada equipo tendrá que buscar, descargar y analizar datos de RNA-Seq que provengan de un **artículo científico**. 
+
+Para la elección de los datos deberán:
+
+  - Especie de tu elección, recomiendo una especie modelo (humano, ratón, Arabidopsis, etc).
+
+  - Contar con un mínimo de **3 réplicas biológicas** por contraste.
+
+  - Datos provenientes de un artículo científico (lo necesitaras para la discusión).
+
+  - Recomiendo tener **2 contrastes como mínimo** (ejemplo: control vs condición 1).
+
+  - Buena la **calidad de los datos** (FastQC).
+
+
+---
+
+## Actividad
+
+### 3) Deben entregarme un documento con la **Descripción de los datos** por equipo:
+
+- Bioproject
+
+- Especie
+
+- Tipo de bibliotecas
+
+- Método de selección (ej: poly A)
+
+- Número de transcriptomas
+
+- Número de réplicas biológicas
+
+- Secuenciador empleado
+
+- Distribución de las muestras (control y tratamiento) (¿Cuántos hay de cada uno?)
+
+- Profundidad de secuenciación de cada transcriptoma
+
+> NOTA: puedes hacerlo en una tabla.
+
+Enviar al correo ecoss@liigh.unam.mx. 
+
+---
+
+class: inverse, center, middle
+
+`r fontawesome::fa("terminal", height = "3em")`
 # Mis primeros pasos en Bash
 
 ---
@@ -1135,6 +1193,7 @@ knitr::include_graphics("figures/permisos2.png")
 ```
 
 ---
+
 # Permisos
 
 Cada usuario tiene permisos diferentes cuando crea un archivo. Los permisos pueden modificarse con `chmod`.
@@ -1197,6 +1256,5 @@ class: center, middle
 `r fontawesome::fa("code", height = "3em")`
 # Miércoles 28 de febrero 2024  
 ## Diversos pipeline para Alineamiento, ensamblaje y conteo
-## Importar datos en R
 
 Gracias por tu atención, respira y coméntame tus dudas. 
