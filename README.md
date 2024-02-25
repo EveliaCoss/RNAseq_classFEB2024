@@ -36,6 +36,7 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
 - Datos: `/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/`
 - Tarea: Elegir en equipos los transcriptomas que emplearán en su proyecto - [Información diapositiva 58 y moodle ENES](https://eveliacoss.github.io/RNAseq_classFEB2024/Presentaciones/Dia1_AspectosGenerales.html#62)
 - Lecturas y cursos recomendados:
+    - [Trinity](https://github.com/trinityrnaseq/trinityrnaseq)
 
 ### Dia 2. Diversos pipeline para Alineamiento, ensamblaje y conteo de reads
 
