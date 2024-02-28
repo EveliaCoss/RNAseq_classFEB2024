@@ -24,6 +24,7 @@
 # Add any modules you might require:
 #
 module load fastqc/0.11.3
+module load multiqc/1.5
 #
 # Write your commands in the next line
 ./qc1.sh
