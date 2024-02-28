@@ -236,6 +236,12 @@ chmod +x downloads.sh
 
 Para correr el script, primero me doy permisos de ejecución con `chmod +x` y después ejecuto el script con `./`
 
+> NOTA: Recuerda darle permisos a tu companero:
+
+```{bash, eval=F}
+setfacl -R -m u:usuario:rwx CARPETA
+```
+
 ---
 ### Descarga de los datos con `wget`
 
@@ -332,6 +338,7 @@ Clase_RNASeq2024/
 │   ├── SRR12363092_1_fastqc.html
 │   ├── SRR12363092_1_fastqc.zip
 │   ├── SRR12363092_2_fastqc.html
+├── scripts/
 ...
 ```
 
@@ -522,6 +529,7 @@ claseSTAR
 ├── TRIM_results
 │   ├── SRR12363092_1_trimmed.fq.gz
 │   ├── SRR12363092_1_unpaired.fq.gz
+├── scripts/
 ```
 ---
 
@@ -763,6 +771,27 @@ Mira [aquí](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practic
 ### SCRIPTS empleados en la clase
 
 Todos los scripts usados en esta clase están en el [GitHub](https://github.com/EveliaCoss/RNAseq_classFEB2024/tree/main/Practica_Dia2/scripts)
+
+---
+
+### Las carpetas contenidas por equipo deberan ser:
+
+```{bash, eval = F}
+Equipo1
+├── annotation    # Archivo de anotacion del organismo (GFF)
+├── data          # raw Data
+├── genome        # Genoma de Referencia o symlink del genoma de referencia (opcional)
+├── metadata.csv  # Metadata
+├── quality1      # FastQC y multiQC de raw Data
+├── quality2      # FastQC y multiQC de los datos despues del Trimming
+├── results       # Resultados obtenidos de DEG
+├── scripts       # Todos los scripts
+├── STAR_index    # Index del genoma de referencia
+├── STAR_output   # Salida de STAR, cuentas y BAM
+├── TRIM_results  # Salida del Trimming
+└── TruSeq3-PE-2.fa #Adaptadores PE de Illumina
+
+```
 
 ---
 

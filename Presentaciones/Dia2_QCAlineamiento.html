@@ -1583,7 +1583,7 @@ left: 6px;
 })(window, document)
 </script>
     <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x928c7ee1bf74039b281cfba225e415b","expires":1}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x941f5c6807f4e58a2b3daaeae717095","expires":1}</script>
     <script>(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.himalaya = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
@@ -3807,6 +3807,13 @@ chmod +x downloads.sh
 
 Para correr el script, primero me doy permisos de ejecución con `chmod +x` y después ejecuto el script con `./`
 
+&gt; NOTA: Recuerda darle permisos a tu companero:
+
+
+```bash
+setfacl -R -m u:usuario:rwx CARPETA
+```
+
 ---
 ### Descarga de los datos con `wget`
 
@@ -3908,6 +3915,7 @@ Clase_RNASeq2024/
 │   ├── SRR12363092_1_fastqc.html
 │   ├── SRR12363092_1_fastqc.zip
 │   ├── SRR12363092_2_fastqc.html
+├── scripts/
 ...
 ```
 
@@ -4108,6 +4116,7 @@ claseSTAR
 ├── TRIM_results
 │   ├── SRR12363092_1_trimmed.fq.gz
 │   ├── SRR12363092_1_unpaired.fq.gz
+├── scripts/
 ```
 ---
 
@@ -4345,6 +4354,28 @@ Mira [aquí](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practic
 ### SCRIPTS empleados en la clase
 
 Todos los scripts usados en esta clase están en el [GitHub](https://github.com/EveliaCoss/RNAseq_classFEB2024/tree/main/Practica_Dia2/scripts)
+
+---
+
+### Las carpetas contenidas por equipo deberan ser:
+
+
+```bash
+Equipo1
+├── annotation    # Archivo de anotacion del organismo (GFF)
+├── data          # raw Data
+├── genome        # Genoma de Referencia o symlink del genoma de referencia (opcional)
+├── metadata.csv  # Metadata
+├── quality1      # FastQC y multiQC de raw Data
+├── quality2      # FastQC y multiQC de los datos despues del Trimming
+├── results       # Resultados obtenidos de DEG
+├── scripts       # Todos los scripts
+├── STAR_index    # Index del genoma de referencia
+├── STAR_output   # Salida de STAR, cuentas y BAM
+├── TRIM_results  # Salida del Trimming
+└── TruSeq3-PE-2.fa #Adaptadores PE de Illumina
+
+```
 
 ---
 
