@@ -36,8 +36,9 @@ counts <- as.data.frame(counts)
 rownames(counts) <- x[,1] # Renombrar las filas con el nombre de los genes
 colnames(counts) <- sub("_ReadsPerGene.out.tab", "", files)
 
-# almacenar metadata y matriz de cuentas
-save(metadata, counts, file = paste0(outdir, 'counts/STAR_counts.RData'))
+# Almacenar metadata y matriz de cuentas
+save(metadata, counts, file = paste0(outdir, "counts/raw_counts.RData"))
+write.csv(counts, file = paste0(outdir,"counts/raw_counts.csv"))
 
 # Guardar informacion de ejecucion
 sessionInfo()
