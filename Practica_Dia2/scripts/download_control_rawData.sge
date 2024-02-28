@@ -24,5 +24,5 @@
 
 #
 # Write your commands in the next line
-wget -P /mnt/Citosina/amedina/dramirez/clase/data/control ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR123/093/SRR12363093/SRR12363093_1.fastq.gz;
-wget -P /mnt/Citosina/amedina/dramirez/clase/data/control ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR123/093/SRR12363093/SRR12363093_2.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR123/093/SRR12363093/SRR12363093_1.fastq.gz;
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR123/093/SRR12363093/SRR12363093_2.fastq.gz
