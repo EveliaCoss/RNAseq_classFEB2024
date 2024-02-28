@@ -57,6 +57,7 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
 
 - Fecha: viernes 1 de marzo 2024
 - Presentación:
+   - [GSEA - Análisis funcional](https://eveliacoss.github.io/RNAseq_classFEB2024/Presentaciones/Dia4_GSEA.html#1)
 - Lecturas y cursos recomendados:
 
 ## Requisitos
