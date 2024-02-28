@@ -231,7 +231,7 @@ Para correr este script y descargar las muestras, debemos ir a la carpeta donde 
 ```{bash, eval = F}
 cd /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/scripts/
 chmod +x downloads.sh
-./downloads.sh
+./download.sh
 ```
 
 Para correr el script, primero me doy permisos de ejecución con `chmod +x` y después ejecuto el script con `./`
@@ -292,6 +292,7 @@ En mi caso, debo de cargar el módulo de `fastqc` primero para poder utilizar lo
 También creamos una carpeta para los outputs de `fastqc`
 
 ```{bash, eval = F}
+qlogin # pedir un nodo de prueba, default = 2GB
 module load fastqc/0.11.3
 module load multiqc/1.5
 cd /mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/
