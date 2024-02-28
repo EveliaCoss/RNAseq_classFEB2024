@@ -49,6 +49,7 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
 
 - Fecha: jueves 29 de Febrero 2024
 - Presentación:
+- Scripts: https://github.com/EveliaCoss/RNAseq_classFEB2024/tree/main/Practica_Dia3/scripts/
 - Lecturas y cursos recomendados:
 
 ### Dia 4. GSEA - Análisis funcional
