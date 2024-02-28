@@ -71,8 +71,7 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
   - Bioconductor
   - DESEq2
   - tximport
-  - topGO
-  - biomaRT
+  - ggprofiler2
 
 ```
 # Instalar Bioconductor
@@ -81,7 +80,7 @@ if (!require("BiocManager", quietly = TRUE))
 BiocManager::install(version = "3.16")
 
 # Paquetes / librerias
-paquetes = c("DESeq2", "tximport", "topGO", "biomaRT")
+paquetes = c("DESeq2", "tximport")
 BiocManager::install(paquetes)
 ```
 
@@ -92,6 +91,7 @@ BiocManager::install(paquetes)
   - stringr
   - ggrepel
   - ggplot2
+  - ggprofiler2
 
 ```
 install.packages("tidyverse")
@@ -100,6 +100,7 @@ install.packages("dplyr")
 #install.packages("stringr")
 install.packages("ggrepel")
 install.packages("ggplot2")
+install.packages("ggprofiler2")
 ```
 
 ## Clases previas
