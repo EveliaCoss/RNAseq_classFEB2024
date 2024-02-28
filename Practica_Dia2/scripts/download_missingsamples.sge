@@ -15,7 +15,7 @@
 #
 # Send an email after the job has finished
 #$ -m e
-#$ -M ecossnav@gmail.com
+#$ -M correo@gmail.com
 #
 # If modules are needed, source modules environment (Do not delete the next line):
 . /etc/profile.d/modules.sh
