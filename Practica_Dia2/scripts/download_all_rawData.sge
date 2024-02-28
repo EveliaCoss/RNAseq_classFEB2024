@@ -11,7 +11,7 @@
 #You can edit the scriptsince this line
 #
 # Your job name
-#$ -N LPS_15
+#$ -N sampleData
 #
 # Send an email after the job has finished
 #$ -m e
@@ -22,6 +22,8 @@
 #
 # Add any modules you might require:
 # Write your commands in the next line
+cd /mnt/Citosina/amedina/ecoss/claseRNASeq2023/data/
+
 wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR123/096/SRR12363096/SRR12363096_1.fastq.gz
 wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR123/096/SRR12363096/SRR12363096_2.fastq.gz
 wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR123/099/SRR12363099/SRR12363099_1.fastq.gz
