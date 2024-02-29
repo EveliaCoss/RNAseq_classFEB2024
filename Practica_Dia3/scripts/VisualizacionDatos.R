@@ -2,13 +2,16 @@
 # Script : Visualizacion grafica de los resultados de DEG
 # Author: Sofia Salazar, Diego Ramirez y Evelia Coss
 # Date: 27/02/2024
-# Description: El siguiente script nos permite realiza el Analisis de expresion Diferencial
-# a partir de los datos provenientes del alineamiento de STAR a R,
-# Primero correr el script "load_data_inR.R"
+# Description: El siguiente script nos permite realiza el Analisis de Terminos GO
+# a partir de los datos provenientes del Analisis de DEG
+# Primero correr el script "DEG_analysis.R"
 # Usage: Correr las lineas en un nodo de prueba en el cluster.
 # Arguments:
-#   - Input: metadata.csv, cuentas de STAR (Terminacion ReadsPerGene.out.tab)
-#   - Output: Matriz de cuentas (CSV y RData)
+#   - Input: 
+#       - dds_Times_vs_control.RData (dds), 
+#       - vst_Times_vs_control.RData (vsdata) 
+#       - archivos de salida de DEG en formato CSV (res_15t, res_30t, res_4t) 
+#   - Output: Volcano plot y Heatmap
 #######
 
 # qlogin 
@@ -22,18 +25,19 @@ library(ggplot2)
 
 # --- Load data -----
 # Cargar archivos
-indir <- "/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/STAR_output"
-outdir <- "/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/results/"
 figdir <- '/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/results/figures/'
 
 #Cargar variable "dds", proveniente del script "DEG_analysis.R"
-load("/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/results/dds_Times_vs_control.RData") 
+#load("/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/results/dds_Times_vs_control.RData") 
+load("/mnt/Guanina/bioinfo24/data/results/dds_Times_vs_control.RData")
 
 #Cargar variable "vsdata", proveniente del script "DEG_analysis.R"
-load("/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/results/vst_Times_vs_control.RData") 
+#load("/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/results/vst_Times_vs_control.RData") 
+load("/mnt/Guanina/bioinfo24/data/results/vst_Times_vs_control.RData") 
 
 #Cargar variable "res_30t", proveniente del script "DEG_analysis.R"
-load("/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/results/DE_30min_vs_control.csv") 
+#load("/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/results/DE_30min_vs_control.csv") 
+load("/mnt/Guanina/bioinfo24/data/results/DE_30min_vs_control.csv") 
 
 # ---- volcano plot ----
 df <- as.data.frame(res_30t)
