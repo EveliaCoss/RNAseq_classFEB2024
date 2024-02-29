@@ -7,8 +7,8 @@
 # Primero correr el script "load_data_inR.R"
 # Usage: Correr las lineas en un nodo de prueba en el cluster.
 # Arguments:
-#   - Input: metadata.csv, cuentas de STAR (Terminacion ReadsPerGene.out.tab)
-#   - Output: Matriz de cuentas (CSV y RData)
+#   - Input: Cargar la variable raw_counts.RData que contiene la matriz de cuentas y la metadata
+#   - Output: DEG
 #######
 
 # qlogin 
@@ -20,17 +20,15 @@ library(DESeq2)
 
 # --- Load data -----
 # Cargar archivos
-indir <- "/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/STAR_output"
 outdir <- "/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/results/"
 figdir <- '/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/results/figures/'
 
 #Cargar variable "counts", proveniente del script "load_data_inR.R"
-load("/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/results/counts/STAR_counts.RData") 
+load("/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/results/counts/raw_counts.RData") 
 samples <- metadata$sample_id # Extraer los nombres de los Transcriptomas
 metadata$type <- as.factor(metadata$type) # convertir a factor
 
 # --- DEG ----
-counts <- counts[5:129239, ] # Filtramos los rows con informacion general sobre el mapeo
 counts <- counts[which(rowSums(counts) > 10),] #Seleccionamos genes con mas de 10 cuentas
 
 # Convertir al formato dds
@@ -57,7 +55,7 @@ dds <- DESeq(dds)
 # final dispersion estimates
 # fitting model and testing
 
-# Obtener la lista de coeficientes
+# Obtener la lista de coeficientes o contrastes
 resultsNames(dds)
 
 # [1] "Intercept"                 "type_PLS_15min_vs_CONTROL"
@@ -74,16 +72,18 @@ ntd <- normTransform(dds)
 # Normalizacion de las cuentas por logaritmo y podrias hacer el analisis usando este objeto en lugar del dds
 ddslog <- rlog(dds, blind = F) 
 
+# Opcion 3. vsd
+# Estima la tendencia de dispersion de los datos y calcula la varianza, hace una normalizacion de las 
+# cuentas con respecto al tamaño de la libreria
+vsdata <- vst(dds, blind = F) 
+
+## --- Deteccion de batch effect ----
+
 # Almacenar la grafica
 png(file = paste0(figdir, "PCA_rlog.png"))
 plt <- plotPCA(ddslog, intgroup = "type")
 print(plt)
 dev.off()
-
-# Opcion 3. vsd
-# Estima la tendencia de dispersion de los datos y calcula la varianza, hace una normalizacion de las 
-# cuentas con respecto al tamaño de la libreria
-vsdata <- vst(dds, blind = F) 
 
 # Almacenar la grafica
 png(file = paste0(figdir, "PCA_vsd.png"))
