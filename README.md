@@ -75,6 +75,8 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
     - Base de datos [Gene Ontology Resource](http://geneontology.org/)
     - Base de datos [AmiGo2](https://amigo.geneontology.org/amigo/landing)
     - [Reducir terminos con REVIGO](http://revigo.irb.hr/)
+    - Heatmap con [ComplexHeatmap -  Github](https://github.com/jokergoo/ComplexHeatmap)
+    - Heatmap con [ComplexHeatmap -  manual](https://jokergoo.github.io/ComplexHeatmap-reference/book/)
 
 ## Requisitos
 
