@@ -36,7 +36,11 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
 - Datos: `/mnt/Guanina/bioinfo24/data/Clase_RNASeq2024/`
 - Tarea: Elegir en equipos los transcriptomas que emplearán en su proyecto - [Información diapositiva 58 y moodle ENES](https://eveliacoss.github.io/RNAseq_classFEB2024/Presentaciones/Dia1_AspectosGenerales.html#62)
 - Lecturas y cursos recomendados:
-    - [Trinity](https://github.com/trinityrnaseq/trinityrnaseq)
+    - [Mi Clase de 2023](https://github.com/EveliaCoss/RNASeq_Workshop_Nov2023)
+    - [Introduction to RNAseq Methods - Presentacion](https://bioinformatics-core-shared-training.github.io/Bulk_RNAseq_Course_Nov22/Bulk_RNAseq_Course_Base/Markdowns/01_Introduction_to_RNAseq_Methods.pdf)
+    - [Intro-to-rnaseq-hpc-O2](https://github.com/hbctraining/Intro-to-rnaseq-hpc-O2/tree/master/lessons)
+    - [RNA-seq technology and analysis overview](https://github.com/mdozmorov/presentations/tree/master/RNA-seq)
+
 
 ### Dia 2. Diversos pipeline para Alineamiento, ensamblaje y conteo de reads
 
@@ -44,6 +48,10 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
 - Presentación:
     - [Diversos pipeline para Alineamiento, ensamblaje y conteo de reads](https://eveliacoss.github.io/RNAseq_classFEB2024/Presentaciones/Dia2_QCAlineamiento.html#1)
 - Lecturas y cursos recomendados:
+    - Alineamiento *de novo* - [Trinity](https://github.com/trinityrnaseq/trinityrnaseq)
+    - Alineamiento con el genoma de referencia - [STAR](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf)
+    - *Pseudoalineamiento* con [Kallisto](https://pachterlab.github.io/kallisto/manual)
+    - [*Pseudoalineamiento* con Kallisto - practica](https://github.com/EveliaCoss/RNAseq_classFEB2023/tree/main/RNA_seq#practica2)
 
 ### Dia 3. Importar datos en R, Normalización y Corrección por batch / DEG con DESeq2
 
@@ -52,6 +60,11 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
     - [Importar datos en R, Normalización y Corrección por batch / DEG con DESeq2](https://eveliacoss.github.io/RNAseq_classFEB2024/Presentaciones/Dia3_ImportarDatos.html#1)
 - Scripts: https://github.com/EveliaCoss/RNAseq_classFEB2024/tree/main/Practica_Dia3/scripts/
 - Lecturas y cursos recomendados:
+    - [Metodos de normalizacion](https://hbctraining.github.io/DGE_workshop/lessons/02_DGE_count_normalization.html#2-create-deseq2-object)
+    - [RNA-seq workflow: gene-level exploratory analysis and differential expression](https://www.bioconductor.org/packages/devel/workflows/vignettes/rnaseqGene/inst/doc/rnaseqGene.html#pca-plot-using-generalized-pca)
+    - [End-to-end RNA-Seq workflow](https://www.bioconductor.org/help/course-materials/2015/CSAMA2015/lab/rnaseqCSAMA.html)
+    - [Transformation, Normalization, and Batch Effect Removal](https://bio-protocol.org/exchange/protocoldetail?id=4462&type=1)
+
 
 ### Dia 4. GSEA - Análisis funcional
 
@@ -59,49 +72,15 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
 - Presentación:
    - [GSEA - Análisis funcional](https://eveliacoss.github.io/RNAseq_classFEB2024/Presentaciones/Dia4_GSEA.html#1)
 - Lecturas y cursos recomendados:
+    - Base de datos [Gene Ontology Resource](http://geneontology.org/)
+    - Base de datos [AmiGo2](https://amigo.geneontology.org/amigo/landing)
+    - [Reducir terminos con REVIGO](http://revigo.irb.hr/)
 
 ## Requisitos
 
 - Contar con una terminal en tu sistema operativo
-  - Si cuentas con Windows tener una terminal como [MobaXTerm](https://mobaxterm.mobatek.net) o descargar y acceder a la terminal de [Visual Studio Code](https://code.visualstudio.com/)
-  - Si cuentas con una Mac o Linux, ya tienes una terminal incluida.
-- Tener conocimientos básicos del uso de R y bash.
-- Tener instalado R version 4.3.2 y RStudio
-- Paquetes de R con Bioconductor
-  - Bioconductor
-  - DESEq2
-  - tximport
-  - ggprofiler2
-
-```
-# Instalar Bioconductor
-if (!require("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install(version = "3.16")
-
-# Paquetes / librerias
-paquetes = c("DESeq2", "tximport")
-BiocManager::install(paquetes)
-```
-
-- Paquetes de R (CRAN)
-  - RColorBrewer (opcional)
-  - tidyverse
-  - dplyr
-  - stringr
-  - ggrepel
-  - ggplot2
-  - ggprofiler2
-
-```
-install.packages("tidyverse")
-#install.packages("RColorBrewer")
-install.packages("dplyr")
-#install.packages("stringr")
-install.packages("ggrepel")
-install.packages("ggplot2")
-install.packages("ggprofiler2")
-```
+- Los paquetes que emplearemos en R v4.0.2, se encuentran presentes en el cluster DNA, por lo que, no es necesario instalar nada en nuestras computadores.
+- Nodo de prueba (qlogin)
 
 ## Clases previas
 
@@ -129,3 +108,5 @@ También aprendimos a crear llaves (ssh-keygen) y alias para acceder a los servi
 - [Pathview - Pagina principal](https://pathview.r-forge.r-project.org/)
 - [Pathview - Manual](https://pathview.r-forge.r-project.org/pathview.pdf)
 - [KEGG - Pathway ID](https://www.genome.jp/kegg/pathway.html)
+- [AnnotationDbi](https://hbctraining.github.io/DGE_workshop_salmon_online/lessons/AnnotationDbi_lesson.html)
+- [Gene Ontology enrichment analysis - Uso de varias bases de datos en R](https://davetang.org/muse/2010/11/10/gene-ontology-enrichment-analysis/)
