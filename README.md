@@ -1,4 +1,4 @@
-# Análisis de datos de RNA-Seq
+# Análisis de datos de RNA-Seq 👾
 
 Instructora: Dra. Evelia Coss, Posdoc de la Dra. Alejandra Medina, LIIGH-UNAM
 
@@ -53,7 +53,7 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
     - *Pseudoalineamiento* con [Kallisto](https://pachterlab.github.io/kallisto/manual)
     - [*Pseudoalineamiento* con Kallisto - practica](https://github.com/EveliaCoss/RNAseq_classFEB2023/tree/main/RNA_seq#practica2)
 
-### Dia 3. Importar datos en R, Normalización y Corrección por batch / DEG con DESeq2
+### Dia 3. Importar datos en R, Normalización y Corrección por batch effect 🪲 / DEG con DESeq2
 
 - Fecha: jueves 29 de Febrero 2024
 - Presentación:
@@ -82,7 +82,26 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
 - Los paquetes que emplearemos en R v4.0.2, se encuentran presentes en el cluster DNA, por lo que, no es necesario instalar nada en nuestras computadores.
 - Nodo de prueba (qlogin)
 
-## Clases previas
+## Pipeline ⚡
+### Pasos a seguir para el análisis de los datos de **RNA-Seq**
+
+- Script [`load_data_inR.R`](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia3/scripts/load_data_inR.R):
+
+  **1)** Importar datos en R (archivo de cuentas) + metadatos y **2)** Crear una matriz de cuentas con todos los transcriptomas
+
+- Script [`DEG_analysis.R`](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia3/scripts/DEG_analysis.R):
+
+  **3)** Crear el archivo `dds` con `DESeq2`, **4)** Correr el análisis de Expresión Diferencial de los Genes (DEG), **5)** Normalización de los datos, **6)** Detección de batch effect y **7)** Obtener los resultados de los contraste de DEG
+
+- Script [`VisualizacionDatos.R`](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia3/scripts/VisualizacionDatos.R):
+
+  **8)** Visualización de los datos
+
+- Script [`GOterms_analysis.R`](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia4/scripts/GOterms_analysis.R):
+
+  **9)** Análisis de Terminos funcionales (GO terms)
+
+## Clases previas 📗
 
 - Introduccion a Rmarkdown
   
@@ -92,7 +111,7 @@ En la clase previa les enseñe a crear reportes en Rmarkdown, si necesitan revis
  
 También aprendimos a crear llaves (ssh-keygen) y alias para acceder a los servidores de una manera segura y rápida: https://github.com/EveliaCoss/keygen
 
-## Cursos para practicar 
+## Cursos para practicar 📕
 
 - [VieRnes de Bioinformática 2023](https://github.com/EveliaCoss/ViernesBioinfo2023)
 - [VieRnes de Bioinformática 2024](https://github.com/EveliaCoss/ViernesBioinfo2024)
