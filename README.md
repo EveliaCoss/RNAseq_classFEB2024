@@ -81,7 +81,7 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
 ## Requisitos
 
 - Contar con una terminal en tu sistema operativo
-- Los paquetes que emplearemos en R v4.0.2, se encuentran presentes en el cluster DNA, por lo que, no es necesario instalar nada en nuestras computadores.
+- Los paquetes que emplearemos en R v4.0.2, se encuentran presentes en el cluster DNA, por lo que, no es necesario instalar nada en nuestras computadoras.
 - Nodo de prueba (qlogin)
 
 ## Pipeline ⚡
