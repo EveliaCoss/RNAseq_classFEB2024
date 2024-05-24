@@ -103,7 +103,7 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
 
   **9)** Análisis de Terminos funcionales (GO terms)
 
-## Clase de retroalimentación 
+## Clase de retroalimentación (24 mayo 2024)
 
 - [Presentacion](https://docs.google.com/presentation/d/1Nw1wUBIGy701K5fmokmiSAWEl2UZGYrLvMjFJEsoeNQ/edit?usp=sharing)
 - [Script](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Retroalimentacion_Bioinfo2024.R)
