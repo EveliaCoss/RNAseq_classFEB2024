@@ -103,6 +103,15 @@ Se darán presentaciones detalladas del uso de programas clave, todos de código
 
   **9)** Análisis de Terminos funcionales (GO terms)
 
+## Clase de retroalimentación 
+
+- [Presentacion](https://docs.google.com/presentation/d/1Nw1wUBIGy701K5fmokmiSAWEl2UZGYrLvMjFJEsoeNQ/edit?usp=sharing)
+- [Script](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Retroalimentacion_Bioinfo2024.R)
+- Informacion fuente:
+    - [Analyzing RNA-seq data with DESeq2 - Michael Love - Contrast](https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#contrasts)
+    - [tutorial about contrasts](https://github.com/tavareshugo/tutorial_DESeq2_contrasts)
+    - [tutorial about contrasts - code](https://github.com/tavareshugo/tutorial_DESeq2_contrasts/blob/main/DESeq2_contrasts.md)
+
 ## Clases previas 📗
 
 - Introduccion a Rmarkdown
